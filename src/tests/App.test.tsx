@@ -1,8 +1,7 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { mockUsers } from "./mocks/user.mock";
-import App from "../App";
-
 import * as ReactQuery from "react-query";
+import App from "../App";
 
 describe("App", () => {
   beforeEach(() => {
