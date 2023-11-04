@@ -9,7 +9,7 @@ import { addLabelProperty, sortByLabel } from "./utils/helpers";
 import AddressInfo from "./components/AddressInfo";
 
 const App: FC = () => {
-  const { data, error } = useQuery("users", fetchUsers);
+  const { data, error, isLoading } = useQuery("users", fetchUsers);
   const [users, setUsers] = useState<DisplayUser[]>([]);
   const [displayValue, setDisplayValue] = useState<DisplayUser | null>(null);
 
@@ -25,23 +25,26 @@ const App: FC = () => {
     }
   }, [data]);
 
+  if (error) {
+    return <div id="fetch-error-message">Unable to fetch users.</div>;
+  }
+
+  if (isLoading) {
+    return <div id="loading-message">Loading...</div>;
+  }
+
   return (
     <div id="app-container">
-      {error ? (
-        <div id="fetch-error-message">Unable to fetch users</div>
-      ) : (
-        <>
-          <Autocomplete
-            disablePortal
-            id="user-combo-box"
-            options={users}
-            sx={{ width: 300 }}
-            onChange={handleOnChange}
-            renderInput={(params) => <TextField {...params} label="Users" />}
-          />
-          <AddressInfo user={displayValue} />
-        </>
-      )}
+      <Autocomplete
+        id="user-combo-box"
+        data-testid="autocomplete"
+        disablePortal
+        options={users}
+        sx={{ width: 300 }}
+        onChange={handleOnChange}
+        renderInput={(params) => <TextField {...params} label="Users" />}
+      />
+      <AddressInfo user={displayValue} />
     </div>
   );
 };

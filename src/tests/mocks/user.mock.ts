@@ -29,3 +29,8 @@ export const mockUser: User = {
   username: "test",
   website: "test.com",
 };
+
+export const mockUsers: User[] = [
+  mockUser,
+  { ...mockUser, name: "Randy Truong" },
+];
