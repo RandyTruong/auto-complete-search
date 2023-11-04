@@ -1,15 +1,15 @@
-type Company = {
+export type Company = {
   name: string;
   catchPhrase: string;
   bs: string;
 };
 
-type Geo = {
+export type Geo = {
   lat: string;
   lng: string;
 };
 
-type Address = {
+export type Address = {
   street: string;
   suite: string;
   city: string;

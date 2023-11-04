@@ -11,12 +11,12 @@ import AddressInfo from "./components/AddressInfo";
 const App: FC = () => {
   const { data, error } = useQuery("users", fetchUsers);
   const [users, setUsers] = useState<DisplayUser[]>([]);
-  const [value, setValue] = useState<DisplayUser | null>(null);
+  const [displayValue, setDisplayValue] = useState<DisplayUser | null>(null);
 
   const handleOnChange = (
     _: SyntheticEvent<Element, Event>,
     newValue: DisplayUser | null
-  ) => setValue(newValue);
+  ) => setDisplayValue(newValue);
 
   useEffect(() => {
     if (data) {
@@ -39,7 +39,7 @@ const App: FC = () => {
             onChange={handleOnChange}
             renderInput={(params) => <TextField {...params} label="Users" />}
           />
-          <AddressInfo value={value} />
+          <AddressInfo user={displayValue} />
         </>
       )}
     </div>

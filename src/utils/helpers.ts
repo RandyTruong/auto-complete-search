@@ -11,15 +11,15 @@ export const formatName = (name: string): string => {
   const prefix = prefixes.includes(list[0]) ? list[0] : null;
 
   formatted = `${list.slice(prefix ? 2 : 1).join(" ")}, `;
-  formatted += `${list[prefix ? 1 : 0]} `;
-  formatted += prefix ? `(${list[0]})` : "";
+  formatted += `${list[prefix ? 1 : 0]}`;
+  formatted += prefix ? ` (${list[0]})` : "";
 
   return formatted;
 };
 
 export const addLabelProperty = (users: User[]): DisplayUser[] =>
-  users.map((e) => {
-    return { ...e, label: formatName(e.name) };
+  users.map((user) => {
+    return { ...user, label: formatName(user.name) };
   });
 
 export const sortByLabel = (users: DisplayUser[]): DisplayUser[] =>
