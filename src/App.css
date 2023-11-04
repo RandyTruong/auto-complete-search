@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+
+p {
+  text-align: left;
+}
+
+.user-info {
+  margin: .8rem;
+  min-height: 11rem;
+}

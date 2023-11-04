@@ -1,28 +1,58 @@
-import { FC } from "react";
+import { FC, SyntheticEvent, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import "./App.css";
-
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-  { label: "The Dark Knight", year: 2008 },
-  { label: "12 Angry Men", year: 1957 },
-  { label: "Schindler's List", year: 1993 },
-  { label: "Pulp Fiction", year: 1994 },
-];
+import { DisplayUser } from "./types/user";
+import { useQuery } from "react-query";
+import { fetchUsers } from "./services/api/users";
+import { formatName, sortByLabel } from "./utils/helpers";
 
 const App: FC = () => {
+  const { data, error } = useQuery("users", fetchUsers);
+  const [users, setUsers] = useState<DisplayUser[]>([]);
+  const [value, setValue] = useState<DisplayUser | null>(null);
+
+  const handleOnClick = (
+    _: SyntheticEvent<Element, Event>,
+    newValue: DisplayUser | null
+  ) => {
+    setValue(newValue);
+  };
+
+  useEffect(() => {
+    if (data) {
+      const formattedUsers: DisplayUser[] = data.map((e) => {
+        return { ...e, label: formatName(e.name) };
+      });
+      setUsers(sortByLabel(formattedUsers));
+    }
+  }, [data]);
+
   return (
-    <div id="app">
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        options={top100Films}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Movie" />}
-      />
+    <div id="app-container">
+      {error ? (
+        <div id="fetch-error-message">Unable to fetch users</div>
+      ) : (
+        <Autocomplete
+          disablePortal
+          id="user-combo-box"
+          options={users}
+          sx={{ width: 300 }}
+          onChange={handleOnClick}
+          renderInput={(params) => <TextField {...params} label="Users" />}
+        />
+      )}
+
+      <div id="user-info-container" className="user-info">
+        {value && (
+          <>
+            <p id="user-label">{value.label}</p>
+            <p id="user-street">{value.address.street}</p>
+            <p id="user-suite">{value.address.suite}</p>
+            <p id="user-zipcode">{value.address.zipcode}</p>
+          </>
+        )}
+      </div>
     </div>
   );
 };
