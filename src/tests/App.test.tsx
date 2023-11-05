@@ -17,10 +17,9 @@ describe("App", () => {
     );
     render(<App />);
 
-    await act(async () => {
-      const input = await screen.getByLabelText("Users");
-      expect(input).not.toBeNull();
-    });
+    const autocomplete = await screen.getByTestId("autocomplete");
+    const input = await within(autocomplete).getByRole("combobox");
+    expect(input).not.toBeNull();
   });
 
   it("should show render selected user", async () => {
