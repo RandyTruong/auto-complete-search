@@ -34,7 +34,7 @@ const App: FC = () => {
   }
 
   return (
-    <div id="app-container">
+    <div className="app-container">
       <Autocomplete
         id="user-combo-box"
         data-testid="autocomplete"

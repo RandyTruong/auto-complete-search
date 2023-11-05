@@ -47,6 +47,9 @@ p {
 
 .user-info {
   margin: 0.8rem;
-  min-height: 11rem;
   font-weight: bold;
+}
+
+.app-container {
+  min-height: 15rem;
 }
