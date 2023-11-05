@@ -42,7 +42,7 @@ const App: FC = () => {
         options={users}
         sx={{ width: 300 }}
         onChange={handleOnChange}
-        renderInput={(params) => <TextField {...params} label="Users" />}
+        renderInput={(params) => <TextField {...params} label="Name" />}
       />
       <AddressInfo user={displayValue} />
     </div>
